@@ -11,6 +11,7 @@ function App() {
 
   return (
     <div className="app">
+      Rizvi Project
       <ThemeProvider theme={theme}>
         <CssBaseline /> {/* This is used to provide a consistent styling accross different browser -> Does by resetting default CSS styles */}
       </ThemeProvider>
