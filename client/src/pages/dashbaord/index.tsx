@@ -49,8 +49,6 @@ const gridTemplateSmallScreens = `
 
 function Dashboard({ }: Props) {
     const isAboveMediumScreens = useMediaQuery("(min-width: 1200px)");
-    const { palette } = useTheme();
-
     // instead of cluterring the div style section wrote the logic here 
     const gridStyles = isAboveMediumScreens ? {
         gridTemplateColumns: "repeat(3, minmax(370px, 1fr))",
@@ -66,16 +64,16 @@ function Dashboard({ }: Props) {
         <div style={{
             width: "100%", height: '100%', display: "grid", gap: '1.5rem', ...gridStyles
         }}>
-            <div style={{ gridArea: 'a', backgroundColor: "#fff" }}></div>
-            <div style={{ gridArea: 'b', backgroundColor: "#fff" }}></div>
-            <div style={{ gridArea: 'c', backgroundColor: "#fff" }}></div>
-            <div style={{ gridArea: 'd', backgroundColor: "#fff" }}></div>
-            <div style={{ gridArea: 'e', backgroundColor: "#fff" }}></div>
-            <div style={{ gridArea: 'f', backgroundColor: "#fff" }}></div>
-            <div style={{ gridArea: 'g', backgroundColor: "#fff" }}></div>
-            <div style={{ gridArea: 'h', backgroundColor: "#fff" }}></div>
-            <div style={{ gridArea: 'i', backgroundColor: "#fff" }}></div>
-            <div style={{ gridArea: 'j', backgroundColor: "#fff" }}></div>
+            <div style={{ gridArea: 'a', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
+            <div style={{ gridArea: 'b', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
+            <div style={{ gridArea: 'c', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
+            <div style={{ gridArea: 'd', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
+            <div style={{ gridArea: 'e', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
+            <div style={{ gridArea: 'f', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
+            <div style={{ gridArea: 'g', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
+            <div style={{ gridArea: 'h', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
+            <div style={{ gridArea: 'i', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
+            <div style={{ gridArea: 'j', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
         </div >
     )
 }
