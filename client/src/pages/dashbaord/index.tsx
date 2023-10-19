@@ -1,6 +1,7 @@
-import { useMediaQuery, useTheme } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
+import { useGetKpisQuery } from "@/state/api";
 
-type Props = {}
+
 
 const gridTemplateLargeScreens = `
     "a b c"
@@ -8,7 +9,7 @@ const gridTemplateLargeScreens = `
     "a b c"
     "a b f"
     "d e f"
-    "d e f"
+    "d e f" 
     "d h i"
     "g h i"
     "g h j"
@@ -47,7 +48,9 @@ const gridTemplateSmallScreens = `
     "j"
 `
 
-function Dashboard({ }: Props) {
+function Dashboard() {
+    const {data} = useGetKpisQuery();
+    console.log("data:",data);
     const isAboveMediumScreens = useMediaQuery("(min-width: 1200px)");
     // instead of cluterring the div style section wrote the logic here 
     const gridStyles = isAboveMediumScreens ? {
@@ -64,7 +67,9 @@ function Dashboard({ }: Props) {
         <div style={{
             width: "100%", height: '100%', display: "grid", gap: '1.5rem', ...gridStyles
         }}>
-            <div style={{ gridArea: 'a', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
+            <div style={{ gridArea: 'a', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}>
+                
+            </div>
             <div style={{ gridArea: 'b', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
             <div style={{ gridArea: 'c', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
             <div style={{ gridArea: 'd', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
