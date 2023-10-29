@@ -2,6 +2,7 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import { useGetKpisQuery } from "@/state/api";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useMemo } from "react";
+import BoxHeader from "@/components/BoxHeader";
 
 
 
@@ -85,6 +86,11 @@ function Dashboard() {
             width: "100%", height: '100%', display: "grid", gap: '1.5rem', ...gridStyles
         }}>
             <div style={{ gridArea: 'a', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}>
+            <BoxHeader
+          title="Revenue and Expenses"
+          subtitle="top line represents revenue, bottom line represents expenses"
+          sideText="+4%"
+        />
             <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           width={500}
