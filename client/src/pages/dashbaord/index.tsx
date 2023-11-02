@@ -275,13 +275,55 @@ function Dashboard() {
 
 
             </div>
-            <div style={{ gridArea: 'd', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
-            <div style={{ gridArea: 'e', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
-            <div style={{ gridArea: 'f', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
-            <div style={{ gridArea: 'g', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
-            <div style={{ gridArea: 'h', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
-            <div style={{ gridArea: 'i', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
-            <div style={{ gridArea: 'j', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}></div>
+            <div style={{ gridArea: 'd', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}>
+            <BoxHeader
+          title="Operational vs Non-Operational Expenses"
+          // subtitle="top line represents revenue, bottom line represents expenses"
+          sideText="+3.7%"
+        />
+            </div>
+            <div style={{ gridArea: 'e', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}>
+            <BoxHeader
+          title="Campaigns and targets"
+          // subtitle="top line represents revenue, bottom line represents expenses"
+          sideText="+4.12%"
+        />
+            </div>
+            <div style={{ gridArea: 'f', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}>
+            <BoxHeader
+          title="Product prices vs Expenses"
+          // subtitle="top line represents revenue, bottom line represents expenses"
+          sideText="+4.12%"
+        />
+            </div>
+            <div style={{ gridArea: 'g', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}>
+            <BoxHeader
+          title="List of Products"
+          // subtitle="top line represents revenue, bottom line represents expenses"
+          sideText="124 products"
+        />
+            </div>
+            <div style={{ gridArea: 'h', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}>
+            <BoxHeader
+          title="Recent orders"
+          // subtitle="top line represents revenue, bottom line represents expenses"
+          sideText="50 latest transactions"
+        />
+            </div>
+            <div style={{ gridArea: 'i', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}>
+            <BoxHeader
+          title="Expense breakdown by category"
+          // subtitle="top line represents revenue, bottom line represents expenses"
+          sideText="+4%"
+        />
+            </div>
+            <div style={{ gridArea: 'j', backgroundColor: '#2d2d34', borderRadius: '1rem', boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)' }}>
+            <BoxHeader
+          title="Overall summary and explanation data for the year" // change this later
+          // subtitle="top line represents revenue, bottom line represents expenses"
+          sideText="+15%"
+        />
+            </div>
         </div >
     )
 }
