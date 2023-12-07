@@ -1,4 +1,4 @@
-export const kpis = [
+export const kpis = [ //Performance over time s
     {
       _id: "63bf8239f03239e002001612",
       totalProfit: "$212000.00",

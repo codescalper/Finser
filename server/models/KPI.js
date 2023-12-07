@@ -4,7 +4,7 @@ import { loadType } from "mongoose-currency";
 const Schema = mongoose.Schema;
 loadType(mongoose);
 
-const daySchema = new Schema(
+const daySchema = new Schema( // * Schema for mongo dsb
   {
     date: String,
     revenue: {
