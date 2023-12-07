@@ -17,6 +17,9 @@ import {
   PieChart,
   Pie,
   Cell,
+  ScatterChart,
+  ZAxis,
+  Scatter,
 } from "recharts";
 import { useMemo } from "react";
 import BoxHeader from "@/components/BoxHeader";
@@ -106,6 +109,19 @@ function Dashboard() {
       )
     );
   }, [operationalData]);
+
+  const productExpenseData = useMemo(() => {
+    return (
+      productData &&
+      productData.map(({ _id, price, expense }) => {
+        return {
+          id: _id,
+          price: price,
+          expense: expense,
+        };
+      })
+    );
+  }, [productData]);
 
   const revenueProfit = useMemo(() => {
     return (
@@ -483,11 +499,44 @@ function Dashboard() {
           boxShadow: "0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)",
         }}
       >
-        <BoxHeader
-          title="Product prices vs Expenses"
-          // subtitle="top line represents revenue, bottom line represents expenses"
-          sideText="+4.12%"
-        />
+        <BoxHeader title="Product Prices vs Expenses" sideText="+4%" />
+        <ResponsiveContainer width="100%" height="100%">
+          <ScatterChart
+            margin={{
+              top: 20,
+              right: 25,
+              bottom: 40,
+              left: -10,
+            }}
+          >
+            <CartesianGrid stroke={palette.grey[800]} />
+            <XAxis
+              type="number"
+              dataKey="price"
+              name="price"
+              axisLine={false}
+              tickLine={false}
+              style={{ fontSize: "10px" }}
+              tickFormatter={(v) => `$${v}`}
+            />
+            <YAxis
+              type="number"
+              dataKey="expense"
+              name="expense"
+              axisLine={false}
+              tickLine={false}
+              style={{ fontSize: "10px" }}
+              tickFormatter={(v) => `$${v}`}
+            />
+            <ZAxis type="number" range={[20]} />
+            <Tooltip formatter={(v) => `$${v}`} />
+            <Scatter
+              name="Product Expense Ratio"
+              data={productExpenseData}
+              fill={palette.tertiary[500]}
+            />
+          </ScatterChart>
+        </ResponsiveContainer>
       </div>
       <div
         style={{
