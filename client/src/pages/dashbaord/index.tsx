@@ -136,6 +136,7 @@ function Dashboard() {
     );
   }, [data]);
   const revenue = useMemo(() => {
+    //use memo
     return (
       data &&
       data[0].monthlyData.map(({ month, revenue }) => {
