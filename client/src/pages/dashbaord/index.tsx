@@ -733,10 +733,33 @@ function Dashboard() {
         }}
       >
         <BoxHeader
-          title="Overall summary and explanation data for the year" // change this later
-          // subtitle="top line represents revenue, bottom line represents expenses"
-          sideText="+15%"
+          title="Overall Summary and Explanation Data"
+          sideText="+40%"
         />
+        <div
+          style={{
+            height: "15px",
+            margin: "1.25rem 1rem 0.4rem 1rem",
+            backgroundColor: palette.primary[800],
+            borderRadius: "1rem",
+          }}
+        >
+          <div
+            style={{
+              height: "15px",
+              backgroundColor: palette.primary[600],
+              borderRadius: "1rem",
+              width: "40%",
+            }}
+          ></div>
+        </div>
+
+        <Typography margin="0 1rem" variant="h6">
+          Orci aliquam enim vel diam. Venenatis euismod id donec mus lorem etiam
+          ullamcorper odio sed. Ipsum non sed gravida etiam urna egestas
+          molestie volutpat et. Malesuada quis pretium aliquet lacinia ornare
+          sed. In volutpat nullam at est id cum pulvinar nunc.
+        </Typography>
       </div>
     </div>
   );
