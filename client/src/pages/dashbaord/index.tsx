@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { useGetKpisQuery, useGetProductsQuery } from "@/state/api";
+import {
+  useGetKpisQuery,
+  useGetProductsQuery,
+  useGetTransactionsQuery,
+} from "@/state/api";
 import {
   AreaChart,
   Area,
@@ -24,6 +28,7 @@ import {
 import { useMemo } from "react";
 import BoxHeader from "@/components/BoxHeader";
 import FlexBetween from "@/components/FlexBetween";
+import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 
 const pieData = [
   { name: "Group A", value: 600 },
@@ -81,7 +86,9 @@ function Dashboard() {
   const pieColors = [palette.primary[800], palette.primary[300]];
   const { data: operationalData } = useGetKpisQuery();
   const { data: productData } = useGetProductsQuery();
-  console.log(operationalData);
+  const { data: transactionData } = useGetTransactionsQuery();
+  // console.log(transactionData);
+  // console.log(operationalData);
   const revenueExpenses = useMemo(() => {
     return (
       data &&
@@ -147,6 +154,26 @@ function Dashboard() {
       })
     );
   }, [data]);
+
+  const productColumns = [
+    {
+      field: "_id",
+      headerName: "id",
+      flex: 1,
+    },
+    {
+      field: "expense",
+      headerName: "Expense",
+      flex: 0.5,
+      renderCell: (params: GridCellParams) => `$${params.value}`,
+    },
+    {
+      field: "price",
+      headerName: "Price",
+      flex: 0.5,
+      renderCell: (params: GridCellParams) => `$${params.value}`,
+    },
+  ];
 
   const isAboveMediumScreens = useMediaQuery("(min-width: 1200px)");
   // instead of cluterring the div style section wrote the logic here
@@ -549,9 +576,36 @@ function Dashboard() {
       >
         <BoxHeader
           title="List of Products"
-          // subtitle="top line represents revenue, bottom line represents expenses"
-          sideText="124 products"
+          sideText={`${productData?.length} products`}
         />
+        <Box
+          mt="0.5rem"
+          p="0 0.5rem"
+          height="75%"
+          sx={{
+            "& .MuiDataGrid-root": {
+              color: palette.grey[300],
+              border: "none",
+            },
+            "& .MuiDataGrid-cell": {
+              borderBottom: `1px solid ${palette.grey[800]} !important`,
+            },
+            "& .MuiDataGrid-columnHeaders": {
+              borderBottom: `1px solid ${palette.grey[800]} !important`,
+            },
+            "& .MuiDataGrid-columnSeparator": {
+              visibility: "hidden",
+            },
+          }}
+        >
+          <DataGrid
+            columnHeaderHeight={25}
+            rowHeight={35}
+            hideFooter={true}
+            rows={productData || []}
+            columns={productColumns}
+          />
+        </Box>
       </div>
       <div
         style={{
