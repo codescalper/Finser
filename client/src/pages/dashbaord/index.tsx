@@ -155,6 +155,24 @@ function Dashboard() {
     );
   }, [data]);
 
+  const pieChartData = useMemo(() => {
+    if (data) {
+      const totalExpenses = data[0].totalExpenses;
+      return Object.entries(data[0].expensesByCategory).map(([key, value]) => {
+        return [
+          {
+            name: key,
+            value: value,
+          },
+          {
+            name: `${key} of Total`,
+            value: totalExpenses - value,
+          },
+        ];
+      });
+    }
+  }, [data]);
+
   const productColumns = [
     {
       field: "_id",
@@ -188,6 +206,32 @@ function Dashboard() {
         gridAutoRows: "80px",
         gridTemplateAreas: gridTemplateSmallScreens,
       };
+
+  const transactionColumns = [
+    {
+      field: "_id",
+      headerName: "id",
+      flex: 1,
+    },
+    {
+      field: "buyer",
+      headerName: "Buyer",
+      flex: 0.67,
+    },
+    {
+      field: "amount",
+      headerName: "Amount",
+      flex: 0.35,
+      renderCell: (params: GridCellParams) => `$${params.value}`,
+    },
+    {
+      field: "productIds",
+      headerName: "Count",
+      flex: 0.1,
+      renderCell: (params: GridCellParams) =>
+        (params.value as Array<string>).length,
+    },
+  ];
   return (
     <div
       style={{
@@ -572,6 +616,7 @@ function Dashboard() {
           backgroundColor: "#2d2d34",
           borderRadius: "1rem",
           boxShadow: "0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)",
+          overflow: "hidden",
         }}
       >
         <BoxHeader
@@ -599,7 +644,7 @@ function Dashboard() {
           }}
         >
           <DataGrid
-            columnHeaderHeight={25}
+            columnHeaderHeight={35}
             rowHeight={35}
             hideFooter={true}
             rows={productData || []}
@@ -616,10 +661,37 @@ function Dashboard() {
         }}
       >
         <BoxHeader
-          title="Recent orders"
-          // subtitle="top line represents revenue, bottom line represents expenses"
-          sideText="50 latest transactions"
+          title="Recent Orders"
+          sideText={`${transactionData?.length} latest transactions`}
         />
+        <Box
+          mt="1rem"
+          p="0 0.5rem"
+          height="80%"
+          sx={{
+            "& .MuiDataGrid-root": {
+              color: palette.grey[300],
+              border: "none",
+            },
+            "& .MuiDataGrid-cell": {
+              borderBottom: `1px solid ${palette.grey[800]} !important`,
+            },
+            "& .MuiDataGrid-columnHeaders": {
+              borderBottom: `1px solid ${palette.grey[800]} !important`,
+            },
+            "& .MuiDataGrid-columnSeparator": {
+              visibility: "hidden",
+            },
+          }}
+        >
+          <DataGrid
+            columnHeaderHeight={25}
+            rowHeight={35}
+            hideFooter={true}
+            rows={transactionData || []}
+            columns={transactionColumns}
+          />
+        </Box>
       </div>
       <div
         style={{
@@ -629,11 +701,28 @@ function Dashboard() {
           boxShadow: "0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)",
         }}
       >
-        <BoxHeader
-          title="Expense breakdown by category"
-          // subtitle="top line represents revenue, bottom line represents expenses"
-          sideText="+4%"
-        />
+        <BoxHeader title="Expense Breakdown By Category" sideText="+4%" />
+        <FlexBetween mt="0.5rem" gap="0.5rem" p="0 1rem" textAlign="center">
+          {pieChartData?.map((data, i) => (
+            <Box key={`${data[0].name}-${i}`}>
+              <PieChart width={110} height={100}>
+                <Pie
+                  stroke="none"
+                  data={data}
+                  innerRadius={18}
+                  outerRadius={35}
+                  paddingAngle={2}
+                  dataKey="value"
+                >
+                  {data.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={pieColors[index]} />
+                  ))}
+                </Pie>
+              </PieChart>
+              <Typography variant="h5">{data[0].name}</Typography>
+            </Box>
+          ))}
+        </FlexBetween>
       </div>
       <div
         style={{
