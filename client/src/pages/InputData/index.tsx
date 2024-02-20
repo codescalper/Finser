@@ -1,8 +1,6 @@
-// Import the necessary modules from Material UI
 import { Button, Modal, Box, TextareaAutosize } from "@mui/material";
 import { useState } from "react";
-
-// Define a custom style for the modal
+import { useNavigate } from "react-router-dom";
 const modalStyle = {
   position: "absolute",
   top: "50%",
@@ -15,18 +13,18 @@ const modalStyle = {
   p: 4,
 };
 
-// Define the InputData component
 function InputData() {
-  // Use a state variable to control the modal visibility
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
-  // Define a function to handle the button click
   const handleOpen = () => setOpen(true);
 
-  // Define a function to handle the modal close
   const handleClose = () => setOpen(false);
+  const handleSubmit = () => {
+    handleOpen();
+    navigate("/");
+  };
 
-  // Return the JSX element
   return (
     <div className="flex items-center justify-center h-screen">
       <Button
@@ -56,7 +54,7 @@ function InputData() {
           <Button
             variant="contained"
             className="flex items-center justify-center"
-            onClick={handleOpen}
+            onClick={handleSubmit}
           >
             Submit
           </Button>
