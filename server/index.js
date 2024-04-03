@@ -12,22 +12,33 @@ import KPI from "./models/KPI.js";
 import Transaction from "./models/Transaction.js";
 import productRoutes from "./routes/product.js";
 import { kpis, products, transactions } from "./data/data.js";
+import dataRoutes from './routes/data.js';
 /* CONFIGURATIONS */
 dotenv.config();
 const app = express();
+app.use(express.json({ limit: Infinity }));
+app.use(bodyParser.json({ limit: Infinity })); 
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
+
 
 // Setting up routes
 
 app.use("/kpi", kpiRoutes);
+app.use('/data', dataRoutes);
 app.use("/product", productRoutes);
 app.use("/transaction", transactionRoutes);
+app.options('*', cors());
+
+app.get("/", (req, res) => {
+  res.send("Hello from Finalysis API");
+});
+
 
 const PORT = process.env.PORT || 3000;
 
