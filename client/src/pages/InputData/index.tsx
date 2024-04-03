@@ -1,65 +1,111 @@
-import { Button, Modal, Box, TextareaAutosize } from "@mui/material";
+import { Button, TextareaAutosize } from "@mui/material";
+import Snackbar from "@mui/material/Snackbar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 700,
-  bgcolor: "#2e2e2e",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import React from "react";
 
 function InputData() {
-  const [open, setOpen] = useState(false);
+  const [kpi, setKpi] = useState("");
+  const [products, setProducts] = useState("");
+  const [transaction, setTransaction] = useState("");
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
-  const handleOpen = () => setOpen(true);
+  const handleClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
 
-  const handleClose = () => setOpen(false);
+    setOpen(false);
+  };
+
+  const action = (
+    <React.Fragment>
+      <Button color="error" size="small" onClick={handleClose}>
+        UNDO
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color={"error"}
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
   const handleSubmit = () => {
-    handleOpen();
+    // Handle form submission logic here
+    if (
+      kpi.trim() === "" ||
+      products.trim() === "" ||
+      transaction.trim() === ""
+    ) {
+      setOpen(true);
+      // Notify the user to fill in all fields
+      // alert("Please fill in all fields before submitting.");
+      return;
+    }
+    console.log("KPI:", kpi);
+    console.log("Products:", products);
+    console.log("Transaction:", transaction);
     navigate("/");
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex flex-col items-center space-y-4 justify-center h-screen bg-[#2e2e2e] p-8">
+      <div className="w-full max-w-3xl Space-y-5">
+        <TextareaAutosize
+          placeholder="Enter KPI"
+          required
+          value={kpi}
+          onChange={(e) => setKpi(e.target.value)}
+          className="w-full bg-[#4c4c4c] pl-5 text-white p-2 rounded-md resize-vertical font-mono ml-4"
+          minRows={5}
+          maxRows={10}
+        />
+        <TextareaAutosize
+          placeholder="Enter Products"
+          value={products}
+          required
+          onChange={(e) => setProducts(e.target.value)}
+          className="w-full bg-[#4c4c4c] pl-5 text-white p-2 rounded-md resize-vertical font-mono mb-4"
+          style={{ marginLeft: "16px" }}
+          minRows={5}
+          maxRows={10}
+        />
+        <TextareaAutosize
+          placeholder="Enter Transaction"
+          value={transaction}
+          required
+          onChange={(e) => setTransaction(e.target.value)}
+          className="w-full bg-[#4c4c4c] text-white p-2 rounded-md resize-vertical font-mono mb-4"
+          style={{ marginLeft: "16px" }}
+          minRows={5}
+          maxRows={10}
+        />
+      </div>
       <Button
         variant="contained"
-        className="flex items-center justify-center"
-        onClick={handleOpen}
+        color="primary"
+        onClick={handleSubmit}
+        style={{ marginTop: "16px" }}
       >
-        Input Data
+        Submit
       </Button>
-      <Modal
+      <Snackbar
         open={open}
+        autoHideDuration={6000}
         onClose={handleClose}
-        aria-labelledby="modal-title"
-        aria-describedby="modal-description"
-      >
-        <Box sx={modalStyle}>
-          <h2 id="modal-title" style={{ color: "white" }}>
-            Enter your data
-          </h2>
-          <TextareaAutosize
-            id="modal-description"
-            aria-label="Enter your data"
-            minRows={10}
-            placeholder="Enter your data here"
-            style={{ width: "100%" }}
-          />
-          <Button
-            variant="contained"
-            className="flex items-center justify-center"
-            onClick={handleSubmit}
-          >
-            Submit
-          </Button>
-        </Box>
-      </Modal>
+        message="Hey please fill in each textbox and data in json format"
+        action={action}
+      />
     </div>
   );
 }
