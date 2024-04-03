@@ -1,13 +1,16 @@
-import { Button, TextareaAutosize } from "@mui/material";
+import { Button, CircularProgress, TextareaAutosize } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
+import axios from "axios";
 
 function InputData() {
   const [kpi, setKpi] = useState("");
+  const [loading, setLoading] = useState(false); 
+
   const [products, setProducts] = useState("");
   const [transaction, setTransaction] = useState("");
   const navigate = useNavigate();
@@ -40,7 +43,7 @@ function InputData() {
     </React.Fragment>
   );
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Handle form submission logic here
     if (
       kpi.trim() === "" ||
@@ -52,10 +55,28 @@ function InputData() {
       // alert("Please fill in all fields before submitting.");
       return;
     }
-    console.log("KPI:", kpi);
-    console.log("Products:", products);
-    console.log("Transaction:", transaction);
-    navigate("/");
+    try {
+      // Send the input data to the backend server
+      setLoading(true);
+      await axios.post('http://localhost:1337/data', {
+        kpi: JSON.parse(kpi),
+        products: JSON.parse(products),
+        transaction: JSON.parse(transaction),
+      });
+  
+      // Navigate to the root path after successful submission
+      navigate('/');
+      console.log("SUBMITTEDDD DATA SUCCESSFULLY")
+      console.log("KPI:", kpi);
+      console.log("Products:", products);
+      console.log("Transaction:", transaction);
+    } catch (error) {
+      console.error('Error submitting data:', error);
+      // Handle error if needed
+    }finally{
+      setLoading(false);
+    }
+  
   };
 
   return (
@@ -94,10 +115,11 @@ function InputData() {
       <Button
         variant="contained"
         color="primary"
+        disabled={loading}
         onClick={handleSubmit}
         style={{ marginTop: "16px" }}
       >
-        Submit
+          {loading ? <CircularProgress size={24} /> : "Submit"}
       </Button>
       <Snackbar
         open={open}
