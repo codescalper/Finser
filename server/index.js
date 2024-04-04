@@ -12,6 +12,7 @@ import KPI from "./models/KPI.js";
 import Transaction from "./models/Transaction.js";
 import productRoutes from "./routes/product.js";
 import { kpis, products, transactions } from "./data/data.js";
+import fs from 'fs';
 import dataRoutes from './routes/data.js';
 /* CONFIGURATIONS */
 dotenv.config();
@@ -26,7 +27,14 @@ app.use(morgan("common"));
 app.use(bodyParser.json());
 app.use(cors());
 
+// function writeJSONToFile(data, filename) {
+//   fs.writeFileSync(`./data/${filename}.json`, JSON.stringify(data, null, 2));
+//   console.log(`${filename}.json file created successfully!`);
+// }
 
+// writeJSONToFile(kpis, 'kpis');
+// writeJSONToFile(products, 'products');
+// writeJSONToFile(transactions, 'transactions');
 // Setting up routes
 
 app.use("/kpi", kpiRoutes);
@@ -42,7 +50,7 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-mongoose.Promise = global.Promise; // Use native JavaScript promises
+mongoose.Promise = global.Promise; 
 
 mongoose
   .connect(process.env.MONGO_URL, {
