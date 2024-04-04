@@ -58,10 +58,13 @@ function InputData() {
     try {
       // Send the input data to the backend server
       setLoading(true);
+      const parsedKpi = JSON.parse(kpi);
+      const parsedProducts = JSON.parse(products);
+      const parsedTransaction = JSON.parse(transaction);
       await axios.post('http://localhost:1337/data', {
-        kpi: JSON.parse(kpi),
-        products: JSON.parse(products),
-        transaction: JSON.parse(transaction),
+        kpi: parsedKpi,
+        products: parsedProducts,
+        transaction: parsedTransaction,
       });
   
       // Navigate to the root path after successful submission
