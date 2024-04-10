@@ -1,19 +1,18 @@
 import { Button, CircularProgress } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
 import axios from "axios";
 import { FileUpload } from "@mui/icons-material";
+import download from "downloadjs";
 
 function InputData() {
   const [kpi, setKpi] = useState(null);
   const [products, setProducts] = useState(null);
   const [transaction, setTransaction] = useState(null);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
   const handleClose = (
@@ -43,6 +42,22 @@ function InputData() {
     </React.Fragment>
   );
 
+  const sendPostRequestAndSaveJSON = async (csvFile, key) => {
+    const formData = new FormData();
+    formData.append("email", "msfunbook@gmail.com");
+    formData.append("csv", csvFile);
+  
+
+      const response = await axios.post("http://localhost:8080/https://data.page/api/getjson", formData, {
+            
+      });
+      const jsonData = response.data;
+      console.log("This is json data",jsonData);
+      console.log(`Done`);
+   
+  };
+
+
   const handleSubmit = async () => {
     if (!kpi || !products || !transaction) {
       setOpen(true);
@@ -50,13 +65,18 @@ function InputData() {
     }
     try {
       setLoading(true);
-      const formData = new FormData();
-      formData.append("kpi", kpi);
-      formData.append("products", products);
-      formData.append("transaction", transaction);
 
-      await axios.post("http://localhost:1337/data", formData);
-      navigate("/");
+      const kpiContent = await readFileContent(kpi);
+      const productsContent = await readFileContent(products);
+      const transactionContent = await readFileContent(transaction);
+
+
+      await Promise.all([
+        sendPostRequestAndSaveJSON(kpiContent, "kpi"),
+        // sendPostRequestAndSaveJSON(products, "products"),
+        // sendPostRequestAndSaveJSON(transaction, "transaction"),
+      ]);
+
       console.log("SUBMITTED DATA SUCCESSFULLY");
     } catch (error) {
       console.error("Error submitting data:", error);
@@ -64,6 +84,21 @@ function InputData() {
       setLoading(false);
     }
   };
+
+
+  const readFileContent = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        resolve(event.target.result);
+      };
+      reader.onerror = (event) => {
+        reject(event.target.error);
+      };
+      reader.readAsText(file);
+    });
+  };
+
 
   return (
     <div className="flex flex-col items-center space-y-4 justify-center h-screen bg-[#2e2e2e] p-8">
