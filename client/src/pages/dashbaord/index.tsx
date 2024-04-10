@@ -29,6 +29,7 @@ import { useMemo } from "react";
 import BoxHeader from "@/components/BoxHeader";
 import FlexBetween from "@/components/FlexBetween";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
+import DashboardBox from "@/components/DashboardBox";
 
 const pieData = [
   { name: "Group A", value: 600 },
@@ -652,22 +653,15 @@ function Dashboard() {
           />
         </Box>
       </div>
-      <div
-        style={{
-          gridArea: "h",
-          backgroundColor: "#2d2d34",
-          borderRadius: "1rem",
-          boxShadow: "0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)",
-        }}
-      >
-        <BoxHeader
+      <DashboardBox gridArea="h">
+      <BoxHeader
           title="Recent Orders"
           sideText={`${transactionData?.length} latest transactions`}
         />
         <Box
           mt="1rem"
           p="0 0.5rem"
-          height="80%"
+          height="70%"
           sx={{
             "& .MuiDataGrid-root": {
               color: palette.grey[300],
@@ -685,14 +679,14 @@ function Dashboard() {
           }}
         >
           <DataGrid
-            columnHeaderHeight={25}
+            columnHeaderHeight={35}
             rowHeight={35}
             hideFooter={true}
             rows={transactionData || []}
             columns={transactionColumns}
           />
         </Box>
-      </div>
+        </DashboardBox>
       <div
         style={{
           gridArea: "i",
@@ -705,7 +699,7 @@ function Dashboard() {
         <FlexBetween mt="0.5rem" gap="0.5rem" p="0 1rem" textAlign="center">
           {pieChartData?.map((data, i) => (
             <Box key={`${data[0].name}-${i}`}>
-              <PieChart width={110} height={100}>
+              <PieChart width={110} height={75}>
                 <Pie
                   stroke="none"
                   data={data}
@@ -728,13 +722,14 @@ function Dashboard() {
         style={{
           gridArea: "j",
           backgroundColor: "#2d2d34",
+          height: "140px",
           borderRadius: "1rem",
           boxShadow: "0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)",
         }}
       >
         <BoxHeader
           title="Overall Summary and Explanation Data"
-          sideText="+40%"
+          sideText="+15%"
         />
         <div
           style={{
@@ -744,14 +739,14 @@ function Dashboard() {
             borderRadius: "1rem",
           }}
         >
-          <div
+          <Box
             style={{
               height: "15px",
               backgroundColor: palette.primary[600],
               borderRadius: "1rem",
               width: "40%",
             }}
-          ></div>
+          ></Box>
         </div>
 
         <Typography margin="0 1rem" variant="h6">
