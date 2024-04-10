@@ -1,4 +1,4 @@
-import { Button, CircularProgress, TextareaAutosize } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -6,13 +6,13 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
 import axios from "axios";
+import { FileUpload } from "@mui/icons-material";
 
 function InputData() {
-  const [kpi, setKpi] = useState("");
-  const [loading, setLoading] = useState(false); 
-
-  const [products, setProducts] = useState("");
-  const [transaction, setTransaction] = useState("");
+  const [kpi, setKpi] = useState(null);
+  const [products, setProducts] = useState(null);
+  const [transaction, setTransaction] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
@@ -44,76 +44,156 @@ function InputData() {
   );
 
   const handleSubmit = async () => {
-    // Handle form submission logic here
-    if (
-      kpi.trim() === "" ||
-      products.trim() === "" ||
-      transaction.trim() === ""
-    ) {
+    if (!kpi || !products || !transaction) {
       setOpen(true);
-      // Notify the user to fill in all fields
-      // alert("Please fill in all fields before submitting.");
       return;
     }
     try {
-      // Send the input data to the backend server
       setLoading(true);
-      const parsedKpi = JSON.parse(kpi);
-      const parsedProducts = JSON.parse(products);
-      const parsedTransaction = JSON.parse(transaction);
-      await axios.post('http://localhost:1337/data', {
-        kpi: parsedKpi,
-        products: parsedProducts,
-        transaction: parsedTransaction,
-      });
-  
-      // Navigate to the root path after successful submission
-      navigate('/');
-      console.log("SUBMITTEDDD DATA SUCCESSFULLY")
-      console.log("KPI:", kpi);
-      console.log("Products:", products);
-      console.log("Transaction:", transaction);
+      const formData = new FormData();
+      formData.append("kpi", kpi);
+      formData.append("products", products);
+      formData.append("transaction", transaction);
+
+      await axios.post("http://localhost:1337/data", formData);
+      navigate("/");
+      console.log("SUBMITTED DATA SUCCESSFULLY");
     } catch (error) {
-      console.error('Error submitting data:', error);
-      // Handle error if needed
-    }finally{
+      console.error("Error submitting data:", error);
+    } finally {
       setLoading(false);
     }
-  
   };
 
   return (
     <div className="flex flex-col items-center space-y-4 justify-center h-screen bg-[#2e2e2e] p-8">
-      <div className="w-full max-w-3xl Space-y-5">
-        <TextareaAutosize
-          placeholder="Enter KPI"
-          required
-          value={kpi}
-          onChange={(e) => setKpi(e.target.value)}
-          className="w-full bg-[#4c4c4c] pl-5 text-white p-2 rounded-md resize-vertical font-mono ml-4"
-          minRows={5}
-          maxRows={10}
-        />
-        <TextareaAutosize
-          placeholder="Enter Products"
-          value={products}
-          required
-          onChange={(e) => setProducts(e.target.value)}
-          className="w-full bg-[#4c4c4c] pl-5 text-white p-2 rounded-md resize-vertical font-mono mb-4"
-          style={{ marginLeft: "16px" }}
-          minRows={5}
-          maxRows={10}
-        />
-        <TextareaAutosize
-          placeholder="Enter Transaction"
-          value={transaction}
-          required
-          onChange={(e) => setTransaction(e.target.value)}
-          className="w-full bg-[#4c4c4c] text-white p-2 rounded-md resize-vertical font-mono mb-4"
-          style={{ marginLeft: "16px" }}
-          minRows={5}
-          maxRows={10}
-        />
+      <div className="w-full max-w-3xl space-y-5">
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: "16px",
+          }}
+        >
+          <label
+            htmlFor="kpi-file"
+            style={{
+              color: "white",
+              fontWeight: "bold",
+              textDecoration: "underline",
+              padding: "4px 8px",
+              cursor: "pointer",
+            }}
+          >
+            KPI.csv
+          </label>
+          <label
+            htmlFor="kpi-file"
+            style={{
+              color: "white",
+              fontWeight: "bold",
+              textDecoration: "underline",
+              padding: "4px 8px",
+              cursor: "pointer",
+            }}
+          >
+            <FileUpload />
+          </label>
+          <input
+            type="file"
+            id="kpi-file"
+            style={{color:"#03fcf8"}}
+            accept=".csv"
+            onChange={(e) => setKpi(e.target.files[0])}
+            className="hidden"
+          />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: "16px",
+          }}
+        >
+          <label
+            htmlFor="products-file"
+            style={{
+              color: "white",
+              fontWeight: "bold",
+              textDecoration: "underline",
+              padding: "4px 8px",
+              cursor: "pointer",
+            }}
+          >
+            Products.csv
+          </label>
+          <label
+            htmlFor="products-file"
+            style={{
+              color: "white",
+              fontWeight: "bold",
+              textDecoration: "underline",
+              padding: "4px 8px",
+              cursor: "pointer",
+            }}
+          >
+            <FileUpload />
+          </label>
+          <input
+            type="file"
+            style={{color:"#03fcf8"}}
+            id="products-file"
+            accept=".csv"
+            onChange={(e) => setProducts(e.target.files[0])}
+            className="hidden"
+          />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: "16px",
+          }}
+        >
+          <label
+            htmlFor="transaction-file"
+            style={{
+              color: "white",
+              fontWeight: "bold",
+              textDecoration: "underline",
+              padding: "4px 8px",
+              cursor: "pointer",
+            }}
+          >
+            Transaction.csv
+          </label>
+          <label
+            htmlFor="transaction-file"
+            style={{
+              color: "white",
+              fontWeight: "bold",
+              textDecoration: "underline",
+              padding: "4px 8px",
+              cursor: "pointer",
+            }}
+          >
+            <FileUpload />
+          </label>
+          <input
+            type="file"
+            id="transaction-file"
+            style={{color:"#03fcf8"}}
+            accept=".csv"
+            onChange={(e) => setTransaction(e.target.files[0])}
+            className="hidden"
+          />
+        </div>
       </div>
       <Button
         variant="contained"
@@ -122,13 +202,13 @@ function InputData() {
         onClick={handleSubmit}
         style={{ marginTop: "16px" }}
       >
-          {loading ? <CircularProgress size={24} /> : "Submit"}
+        {loading ? <CircularProgress size={24} /> : "Submit"}
       </Button>
       <Snackbar
         open={open}
         autoHideDuration={6000}
         onClose={handleClose}
-        message="Hey please fill in each textbox and data in json format"
+        message="Please select all three files before submitting."
         action={action}
       />
     </div>
