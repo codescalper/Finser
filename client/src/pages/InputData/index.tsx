@@ -12,6 +12,7 @@ function InputData() {
   const [kpi, setKpi] = useState(null);
   const [products, setProducts] = useState(null);
   const [transaction, setTransaction] = useState(null);
+  const [kpisJson, setKpiJson] = useState<any[]>([]); 
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -46,17 +47,16 @@ function InputData() {
     const formData = new FormData();
     formData.append("email", "msfunbook@gmail.com");
     formData.append("csv", csvFile);
-  
 
-      const response = await axios.post("http://localhost:8080/https://data.page/api/getjson", formData, {
-            
-      });
-      const jsonData = response.data;
-      console.log("This is json data",jsonData);
-      console.log(`Done`);
-   
+    const response = await axios.post(
+      "http://localhost:8080/https://data.page/api/getjson",
+      formData,
+      {}
+    );
+    const jsonData = response.data;
+    console.log(`Converted ${key} to JSON`);
+    return jsonData;
   };
-
 
   const handleSubmit = async () => {
     if (!kpi || !products || !transaction) {
@@ -70,14 +70,14 @@ function InputData() {
       const productsContent = await readFileContent(products);
       const transactionContent = await readFileContent(transaction);
 
-
-      await Promise.all([
-        sendPostRequestAndSaveJSON(kpiContent, "kpi"),
-        // sendPostRequestAndSaveJSON(products, "products"),
-        // sendPostRequestAndSaveJSON(transaction, "transaction"),
-      ]);
-
+      const kpiJson = await sendPostRequestAndSaveJSON(kpiContent, "KPI");
+      const productJson = await sendPostRequestAndSaveJSON(productsContent, "Products");
+      const transactionJson = await sendPostRequestAndSaveJSON(transactionContent, "Transaction");
+      setKpiJson(kpiJson);
       console.log("SUBMITTED DATA SUCCESSFULLY");
+      console.log("KPI JSON:", kpisJson);
+      console.log("Products JSON:", productJson);
+      console.log("Transaction JSON:", transactionJson);
     } catch (error) {
       console.error("Error submitting data:", error);
     } finally {
