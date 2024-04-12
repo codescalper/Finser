@@ -7,6 +7,7 @@ import React from "react";
 import axios from "axios";
 import { FileUpload } from "@mui/icons-material";
 import download from "downloadjs";
+import { useNavigate } from "react-router-dom";
 
 function InputData() {
   const [kpi, setKpi] = useState(null);
@@ -15,6 +16,7 @@ function InputData() {
   const [kpisJson, setKpiJson] = useState<any[]>([]); 
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleClose = (
     event: React.SyntheticEvent | Event,
@@ -74,10 +76,18 @@ function InputData() {
       const productJson = await sendPostRequestAndSaveJSON(productsContent, "Products");
       const transactionJson = await sendPostRequestAndSaveJSON(transactionContent, "Transaction");
       setKpiJson(kpiJson);
+
+      await axios.post('http://localhost:1337/data', { 
+        kpi: kpiJson, 
+        products: productJson, 
+        transaction: transactionJson 
+      });
+      
       console.log("SUBMITTED DATA SUCCESSFULLY");
       console.log("KPI JSON:", kpisJson);
       console.log("Products JSON:", productJson);
       console.log("Transaction JSON:", transactionJson);
+      navigate('/');
     } catch (error) {
       console.error("Error submitting data:", error);
     } finally {

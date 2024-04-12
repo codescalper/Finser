@@ -14,6 +14,7 @@ import productRoutes from "./routes/product.js";
 import { kpis, products, transactions } from "./data/data.js";
 import fs from 'fs';
 import dataRoutes from './routes/data.js';
+
 /* CONFIGURATIONS */
 dotenv.config();
 const app = express();
