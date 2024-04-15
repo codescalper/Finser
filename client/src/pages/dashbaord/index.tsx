@@ -472,7 +472,7 @@ function Dashboard() {
               right: 0,
               left: -10,
               bottom: 55,
-            }}
+            }}  
           >
             <CartesianGrid vertical={false} stroke={palette.grey[800]} />
             <XAxis
@@ -722,7 +722,7 @@ function Dashboard() {
         style={{
           gridArea: "j",
           backgroundColor: "#2d2d34",
-          height: "140px",
+          height: "150px",
           borderRadius: "1rem",
           boxShadow: "0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)",
         }}
@@ -750,10 +750,7 @@ function Dashboard() {
         </div>
 
         <Typography margin="0 1rem" variant="h6">
-          Orci aliquam enim vel diam. Venenatis euismod id donec mus lorem etiam
-          ullamcorper odio sed. Ipsum non sed gravida etiam urna egestas
-          molestie volutpat et. Malesuada quis pretium aliquet lacinia ornare
-          sed. In volutpat nullam at est id cum pulvinar nunc.
+        FinServ has experienced fluctuations in revenue and expenses, with peaks during certain months. Operational costs have alternated with non-operational expenses. Marketing campaigns aimed to boost sales by 83 units, but some revenue losses occurred. Profit margins vary across products, impacting overall profitability. Cost control measures focused on salaries, supplies.
         </Typography>
       </div>
     </div>
