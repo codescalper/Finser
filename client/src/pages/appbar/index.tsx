@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { Box, Typography, useTheme } from "@mui/material";
 import CandlestickChartIcon from "@mui/icons-material/CandlestickChart";
 import { tokens } from "@/theme";
+// eslint-disable-next-line @typescript-eslint/ban-types
 type Props = {};
 
-function AppBar(props: Props) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const AppBar = (props: Props) => {
   const { palette } = useTheme();
   const [selected, setSelected] = useState("Dashbaord"); //Default value is Dashbaord
   return (

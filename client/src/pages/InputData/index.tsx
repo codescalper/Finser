@@ -6,13 +6,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
 import axios from "axios";
 import { FileUpload } from "@mui/icons-material";
-import download from "downloadjs";
 import { useNavigate } from "react-router-dom";
 
 function InputData() {
   const [kpi, setKpi] = useState(null);
   const [products, setProducts] = useState(null);
   const [transaction, setTransaction] = useState(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [kpisJson, setKpiJson] = useState<any[]>([]); 
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
