@@ -722,7 +722,7 @@ function Dashboard() {
         style={{
           gridArea: "j",
           backgroundColor: "#2d2d34",
-          height: "150px",
+          height: "200px",
           borderRadius: "1rem",
           boxShadow: "0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,0.8)",
         }}
