@@ -51,7 +51,7 @@ function InputData() {
     formData.append("csv", csvFile);
 
     const response = await axios.post(
-      "http://localhost:8080/https://data.page/api/getjson",
+      "https://cors-finser-v1.onrender.com/https://data.page/api/getjson",
       formData,
       {}
     );
@@ -77,7 +77,7 @@ function InputData() {
       const transactionJson = await sendPostRequestAndSaveJSON(transactionContent, "Transaction");
       setKpiJson(kpiJson);
 
-      await axios.post('http://localhost:1337/data', { 
+      await axios.post('https://finser-v1.onrender.com/data', { 
         kpi: kpiJson, 
         products: productJson, 
         transaction: transactionJson 
